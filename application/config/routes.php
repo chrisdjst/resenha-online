@@ -55,5 +55,7 @@ $route['resenha-online/'] = 'ResenhaOnline';
 $route['resenha-online'] = 'ResenhaOnline';
 $route['editar-usuario'] = 'Usuario/editarUsuario';
 $route['cadastrar-filme'] = 'Filme/cadastroFilme';
+$route['alterarFuncao/(: num)'] = 'alterarFuncao/ $1';
+$route['(: num)/alterarFuncao/(: num)'] = 'alterarFuncao/ $1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;

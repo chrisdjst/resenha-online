@@ -79,6 +79,7 @@ class Usuario extends CI_Controller {
                 'nome' => $this->input->post('nome'),
                 'email' => $this->input->post('email'),
                 'sobre' => $this->input->post('sobre'),
+				'id_funcao' => 2,
             );
 
             $this->Model_usuario->editarPerfil($usuario, $this->usuario['id_usuario']);
@@ -133,4 +134,71 @@ class Usuario extends CI_Controller {
 
     }
 
+
+    public function criarFuncao()
+	{
+		$data = $this->Usuario_formularios->criarFuncao();
+		$this->twig->display('usuario/criarFuncao', $data);
+	}
+
+
+	public function novaFuncao()
+	{
+		$this->form_validation->set_rules('funcao', 'função', array('required', 'min_length[2]', 'max_length[100]', 'regex_match[/^[ A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/]'));
+
+		if($this->form_validation->run() == FALSE)
+		{
+			$form["form_open"] = form_open("Usuario/novaFuncao", 'method="POST"');
+			$form["label_funcao"] = form_label("Nome da Função:","funcao",'class=""', 'for="funcao"');
+			$form["input_funcao"] = form_input(array("name" => "funcao", "id" => "funcao", "class" => "form-control", "maxlength" => "255", "placeholder" => "Ex: Administrador"),set_value('funcao'));
+			$form["button_submit"] = form_button(array("type" => "submit", "content" => "Entrar", "class" => "btn btn-primary"));
+			$form["form_close"] = form_close();
+
+			$form["erros_validacao"] = array(
+				"erros_funcao" => form_error('funcao'),
+			);
+
+			$this->twig->display('usuario/criarFuncao', $form);
+		}
+		else
+		{
+			$funcao = array(
+				'nome_funcao' => $this->input->post('funcao'),
+			);
+
+			$this->Model_usuario->novaFuncao($funcao);
+			$this->session->set_flashdata("msg_funcao_cadastro_com_sucesso", "Senha trocada com Sucesso!");
+			$this->session->set_flashdata("classe_funcao_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
+			redirect("".base_url()."usuario/Perfil");
+		}
+	}
+
+
+	public function listarUsuario()
+	{
+		$totalUsuarios = $this->Model_usuario->getTotalUsuarios();
+
+		$this->load->library('pagination');
+
+		$config['base_url'] = "".base_url()."usuario/listarUsuario";
+		$config['total_rows'] = $totalUsuarios;
+		$config['per_page'] = 1;
+
+
+		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+		$data["results"] = $this->Model_usuario->buscarUsuario($config["per_page"], $page);
+
+		$this->pagination->initialize($config);
+
+		$links = $this->pagination->create_links();
+		$data['links'] = $links;
+		$this->twig->display('usuario/listarUsuario', $data);
+
+	}
+
+	public function alterarFuncao($idUsuario)
+	{
+		echo $idUsuario;
+	}
 }

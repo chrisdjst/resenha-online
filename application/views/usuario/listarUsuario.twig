@@ -1,0 +1,58 @@
+{% extends "base.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}{% include "base/header.twig" %}{% endblock %}
+
+{% block body_class %}{% endblock %}
+
+{% block master_class %}jumbotron{% endblock %}
+
+{% block left_class %}col-md-2{% endblock %}
+
+{% block mid_class %}col-md-8{% endblock %}
+
+{% block right_class %}col-md-2{% endblock %}
+
+
+{% block content %}
+	<div class="row">
+		<div class="container-fluid">
+		<table>
+			<tr>
+				<td>
+					Nome:
+				</td>
+				<td>
+					Função:
+				</td>
+				<td>
+					Alterar:
+				</td>
+			</tr>
+			{% for usuario in results %}
+				<tr>
+					<td>
+						{{ usuario.nome|raw }}
+					</td>
+					<td>
+						{{ usuario.funcao|raw }}
+					</td>
+					<td>
+						<a href="alterarFuncao/{{ usuario.id_usuario|raw }}" class="btn btn-success">Mudar</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+			<div class="pagination">
+				{{ links|raw }}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block right_content %}
+
+
+{% endblock %}

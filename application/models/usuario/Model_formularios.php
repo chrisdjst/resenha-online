@@ -21,7 +21,7 @@ class Model_formularios extends CI_Model{
         $form["label_email"] = form_label("Email*:","email",'class=""', 'for="nome"');
         $form["input_email"] = form_input(array("name" => "email", "id" => "email", "class" => "form-control", "maxlength" => "50", "placeholder" => "Ex: seuemail@mail.com"));
         $form['label_senha'] = form_label("Senha*:","senha",'class=""');
-        $form["input_senha"] = form_password(array("name" => "senha", "id" => "senha", "class" => "form-control w-100", "maxlength" => "255"));
+        $form["input_senha"] = form_password(array("name" => "senha", "id" => "senha", "class" => "form-control", "maxlength" => "255"));
         $form['label_repetir_senha'] = form_label("Repetir Senha*:","repetirSenha",'class=""');
         $form["input_repetir_senha"] = form_password(array("name" => "repetirSenha", "id" => "repetirSenha", "class" => "form-control w-100", "maxlength" => "255"));
         $form["button_submit"] = form_button(array("type" => "submit", "content" => "Cadastrar", "class" => "btn btn-primary"));
@@ -29,6 +29,7 @@ class Model_formularios extends CI_Model{
 
         return $form;
     }
+
 
     public function editarUsuario($usuario){
         $form["form_open"] = form_open("usuario/editar", 'method="POST"');
@@ -52,6 +53,18 @@ class Model_formularios extends CI_Model{
 
         return $form;
     }
+
+
+    public function criarFuncao()
+	{
+		$form["form_open"] = form_open("Usuario/novaFuncao", 'method="POST"');
+		$form["label_funcao"] = form_label("Nome da Função:","funcao",'class=""', 'for="funcao"');
+		$form["input_funcao"] = form_input(array("name" => "funcao", "id" => "funcao", "class" => "form-control", "maxlength" => "255", "placeholder" => "Ex: Administrador"));
+		$form["button_submit"] = form_button(array("type" => "submit", "content" => "Entrar", "class" => "btn btn-primary"));
+		$form["form_close"] = form_close();
+
+		return $form;
+	}
 
 }
 

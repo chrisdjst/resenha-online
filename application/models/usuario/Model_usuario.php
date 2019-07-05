@@ -37,7 +37,13 @@ class Model_usuario extends CI_Model{
     }
 
 
-    public function trocarSenha($usuario, $idUsuario)
+	public function novaFuncao($funcao)
+	{
+		$this->db->insert('funcao', $funcao);
+	}
+
+
+	public function trocarSenha($usuario, $idUsuario)
     {
         $this->db->where('id_usuario', $idUsuario);
         $this->db->update('usuario', $usuario);
@@ -78,6 +84,40 @@ class Model_usuario extends CI_Model{
         $this->session->unset_userdata('usuario');
         $this->session->set_userdata('usuario', $usuario);
     }
+
+
+    public function getTotalUsuarios()
+	{
+    	return $this->db->count_all("usuario");
+	}
+
+
+	public function buscarUsuario($limit, $start)
+	{
+		$this->db->limit($limit, $start);
+		$query = $this->db->get("usuario")->result_array();
+
+		if (count($query) > 0) {
+			for( $i = 0; $i < count($query); $i++)
+			{
+				$query[$i]['funcao'] = $this->buscarNomeFuncao($query[$i]['id_funcao']);
+			}
+
+			return $query;
+		}
+
+		return false;
+	}
+
+
+	public function buscarNomeFuncao($idFuncao)
+	{
+				  $this->db->where('id_funcao', $idFuncao);
+				  $this->db->select('nome_funcao');
+		$funcao = $this->db->get('funcao')->row_array();
+		return $funcao['nome_funcao'];
+	}
+
 }
 
 

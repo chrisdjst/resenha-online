@@ -16,51 +16,24 @@
 
 
 {% block content %}
-    <div class="row">
-        <div class="container-fluid">
-            {{ form_open|raw }}
-            <div class="form-group">
-                {{ label_nome|raw }}
-                {{ input_nome|raw }}
+    <div class="container-fluid">
 
-                {% if (erros_validacao['erros_nome']) %}
-
-                    {{ erros_validacao['erros_nome']|raw }}
-
-                {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                <label>{{ nome|raw }} Seja Bem Vindo</label>
             </div>
-            <div class="form-group">
-                {{ label_email|raw }}
-                {{ input_email|raw }}
-
-                {% if (erros_validacao['erros_email']) %}
-
-                    {{ erros_validacao['erros_email']|raw }}
-
-                {% endif %}
+            <div class="col-md-8">
+                <label>Sobre:</label>
+                <p>{{ sobre|raw }}</p>
             </div>
-            <div class="form-group">
-                {{ label_senha|raw }}
-                {{ input_senha|raw }}
+        </div>
 
-                {% if (erros_validacao['erros_senha']) %}
+        <hr/>
 
-                    {{ erros_validacao['erros_senha']|raw }}
-
-                {% endif %}
+        <div class="row wy-text-center">
+            <div class="col-md-12">
+                <label>Seus filmes favoritos:</label>
             </div>
-            <div class="form-group">
-                {{ label_repetir_senha|raw }}
-                {{ input_repetir_senha|raw }}
-
-                {% if (erros_validacao['erros_repetirSenha']) %}
-
-                    {{ erros_validacao['erros_repetirSenha']|raw }}
-
-                {% endif %}
-            </div>
-            {{ button_submit|raw }}
-            {{ form_close|raw }}
         </div>
     </div>
 

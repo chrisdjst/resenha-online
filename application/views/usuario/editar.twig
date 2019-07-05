@@ -1,0 +1,83 @@
+{% extends "base.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}{% include "base/header.twig" %}{% endblock %}
+
+{% block body_class %}{% endblock %}
+
+{% block master_class %}jumbotron{% endblock %}
+
+{% block left_class %}col-md-2{% endblock %}
+
+{% block mid_class %}col-md-8{% endblock %}
+
+{% block right_class %}col-md-2{% endblock %}
+
+{% block style_footer %}style="bottom: 0;position: relative;width: 100%"{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="container-fluid">
+            {{ form_open|raw }}
+            <div class="form-group">
+                {{ label_nome|raw }}
+                {{ input_nome|raw }}
+
+                {% if (erros_validacao['erros_nome']) %}
+
+                    {{ erros_validacao['erros_nome']|raw }}
+
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ label_email|raw }}
+                {{ input_email|raw }}
+
+                {% if (erros_validacao['erros_email']) %}
+
+                    {{ erros_validacao['erros_email']|raw }}
+
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ label_sobre|raw }}
+                {{ text_area_sobre|raw }}
+
+                {% if (erros_validacao['erros_sobre']) %}
+
+                    {{ erros_validacao['erros_sobre']|raw }}
+
+                {% endif %}
+            </div>
+
+            {{ button_submit|raw }}
+            {{ form_close|raw }}
+
+            <hr/>
+
+            {{ form_open_senha|raw }}
+            <div class="form-group">
+                {{ label_senha|raw }}
+                {{ input_senha|raw }}
+            </div>
+            <div class="form-group">
+                {{ label_repetir_senha|raw }}
+                {{ input_repetir_senha|raw }}
+            </div>
+            <div class="form-group">
+                {{ label_senha_atual|raw }}
+                {{ input_senha_atual|raw }}
+            </div>
+            {{ button_submit_senha|raw }}
+            {{ form_close|raw }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block right_content %}
+
+
+{% endblock %}

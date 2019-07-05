@@ -30,21 +30,31 @@ class Model_usuario extends CI_Model{
             return $senha;
     }
 
+
     public function cadastrar($usuario)
     {
         $this->db->insert('usuario', $usuario);
     }
 
-    public function buscarHash($email){
 
+    public function trocarSenha($usuario, $idUsuario)
+    {
+        $this->db->where('id_usuario', $idUsuario);
+        $this->db->update('usuario', $usuario);
+    }
+
+
+    public function buscarHash($email)
+    {
         $this->db->where("email", $email);
         $this->db->select('senha');
         $hash = $this->db->get("usuario")->row_array();
         return $hash['senha'];
     }
 
-    public function logar($email, $senha){
 
+    public function logar($email, $senha)
+    {
         $hash = $this->buscarHash($email);
 
         $senha = crypt($senha, $hash);
@@ -54,6 +64,19 @@ class Model_usuario extends CI_Model{
         $usuario = $this->db->get("usuario")->row_array();
 
         return $usuario;
+    }
+
+
+    public function editarPerfil($usuario, $idUsuario)
+    {
+        $this->db->where('id_usuario', $idUsuario);
+        $this->db->update('usuario', $usuario);
+
+        $this->db->where('id_usuario', $idUsuario);
+        $usuario = $this->db->get("usuario")->row_array();
+
+        $this->session->unset_userdata('usuario');
+        $this->session->set_userdata('usuario', $usuario);
     }
 }
 

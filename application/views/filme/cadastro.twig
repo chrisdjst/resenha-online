@@ -1,0 +1,44 @@
+{% extends "base.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}{% include "base/header.twig" %}{% endblock %}
+
+{% block body_class %}{% endblock %}
+
+{% block master_class %}jumbotron{% endblock %}
+
+{% block left_class %}col-md-2{% endblock %}
+
+{% block mid_class %}col-md-8{% endblock %}
+
+{% block right_class %}col-md-2{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="container-fluid">
+            {{ form_open|raw }}
+            <div class="form-group">
+                {{ label_nome|raw }}
+                {{ input_nome|raw }}
+            </div>
+            <div class="form-group">
+                {{ label_descricao|raw }}
+                {{ text_area_descricao|raw }}
+            </div>
+            <div class="form-group">
+                {{ label_upload|raw }}
+                {{ input_upload|raw }}
+            </div>
+            {{ button_submit|raw }}
+            {{ form_close|raw }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block right_content %}
+
+
+{% endblock %}

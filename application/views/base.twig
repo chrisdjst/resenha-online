@@ -1,0 +1,67 @@
+<html>
+    <head>
+        {% block head %}
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="{{ base_url('')|raw }}vendor/twbs/bootstrap/dist/css/bootstrap.css"/>
+            <title>{% block title %}{% endblock %} - Resenha Online</title>
+        {% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+
+
+        {% block header %}{% endblock %}
+
+
+        <div class="{% block master_class %}{% endblock %}" id="example1">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="{% block left_class %}{% endblock %} esquerda">
+                        {% block left_content %}{% endblock %}
+                    </div>
+
+                    <div class="{% block mid_class %}{% endblock %} centro">
+                        {% block content %}{% endblock %}
+                    </div>
+
+                    <div class="{% block right_class %}{% endblock %} direita">
+                        {% block right_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            {% block footer %}
+                <div class="bg-dark" style="bottom: 0;position: absolute;width: 100%">
+
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <h1>Contato:</h1>
+                        </div>
+                        <div class="col-md-8">
+                            Todos os direitos reservados à Resenha Online.
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <label>
+                                Telefone: (99) 99999-9999
+                            </label>
+                            <label>
+                                E-mail: christophertheilacher@gmail.com
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            {% endblock %}
+        </footer>
+
+        {% block scripts %}
+            <script src = "{{ base_url()|raw }}vendor/components/jquery/jquery.js"></script>
+            <script src="{{ base_url()|raw }}vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
+        {% endblock %}
+
+    </body>
+</html>

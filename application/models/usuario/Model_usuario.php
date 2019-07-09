@@ -86,15 +86,19 @@ class Model_usuario extends CI_Model{
     }
 
 
-    public function getTotalUsuarios()
+    public function getTotalUsuarios($idUsuario)
 	{
-    	return $this->db->count_all("usuario");
+	    $this->db->where('id_usuario !=',$idUsuario);
+	    $this->db->where('id_funcao !=', 3);
+    	return $this->db->count_all_results("usuario");
 	}
 
 
-	public function buscarUsuario($limit, $start)
+	public function buscarUsuario($limit, $start, $idUsuario)
 	{
 		$this->db->limit($limit, $start);
+		$this->db->where('id_usuario !=', $idUsuario);
+        $this->db->where('id_funcao !=', 3);
 		$query = $this->db->get("usuario")->result_array();
 
 		if (count($query) > 0) {

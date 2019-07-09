@@ -1,0 +1,58 @@
+{% extends "base.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block header %}{% include "base/header.twig" %}{% endblock %}
+
+{% block body_class %}{% endblock %}
+
+{% block master_class %}jumbotron{% endblock %}
+
+{% block left_class %}col-md-2{% endblock %}
+
+{% block mid_class %}col-md-8{% endblock %}
+
+{% block right_class %}col-md-2{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="container-fluid">
+            <table class="table table-dark">
+                <tr>
+                    <td>
+                        Nome:
+                    </td>
+                    <td>
+                        Descrição:
+                    </td>
+                    <td>
+                        Alterar:
+                    </td>
+                </tr>
+                {% for filmes in results %}
+                    <tr>
+                        <td>
+                          {{ filmes.nome|raw }}
+                        </td>
+                        <td>
+                            {{ filmes.descricao|raw }}
+                        </td>
+                        <td>
+                            <a class="btn btn-sucess " href="{{ base_url() }}Filme/adicionarFavoritos/{{ filmes.id_filme|raw }}">Adicionar aos Favoritos</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="pagination">
+                {{ links|raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block right_content %}
+
+
+{% endblock %}

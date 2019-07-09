@@ -167,7 +167,7 @@ class Usuario extends CI_Controller {
 			);
 
 			$this->Model_usuario->novaFuncao($funcao);
-			$this->session->set_flashdata("msg_funcao_cadastro_com_sucesso", "Senha trocada com Sucesso!");
+			$this->session->set_flashdata("msg_funcao_cadastro_com_sucesso", "Função cadastrada com Sucesso!");
 			$this->session->set_flashdata("classe_funcao_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
 			redirect("".base_url()."usuario/Perfil");
 		}
@@ -176,7 +176,7 @@ class Usuario extends CI_Controller {
 
 	public function listarUsuario()
 	{
-		$totalUsuarios = $this->Model_usuario->getTotalUsuarios();
+		$totalUsuarios = $this->Model_usuario->getTotalUsuarios($this->usuario['id_usuario']);
 
 		$this->load->library('pagination');
 
@@ -187,7 +187,7 @@ class Usuario extends CI_Controller {
 
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-		$data["results"] = $this->Model_usuario->buscarUsuario($config["per_page"], $page);
+		$data["results"] = $this->Model_usuario->buscarUsuario($config["per_page"], $page, $this->usuario['id_usuario']);
 
 		$this->pagination->initialize($config);
 
@@ -199,6 +199,7 @@ class Usuario extends CI_Controller {
 
 	public function alterarFuncao($idUsuario)
 	{
-		echo $idUsuario;
+        $data = $this->Usuario_formularios->formularioAlterarFuncao($idUsuario);
+        $this->twig->display('alterarFuncao', $data);
 	}
 }

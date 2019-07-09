@@ -81,4 +81,36 @@ class Filme extends CI_Controller {
 		}
 
 	}
+
+
+	public function listarFilmes(){
+        $totalFilmes = $this->Model_filme->getTotalFilmes();
+
+        $this->load->library('pagination');
+
+        $config['base_url'] = "".base_url()."usuario/listarUsuario";
+        $config['total_rows'] = $totalFilmes;
+        $config['per_page'] = 1;
+
+
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        $data["results"] = $this->Model_filme->buscarFilme($config["per_page"], $page);
+
+        $this->pagination->initialize($config);
+
+        $links = $this->pagination->create_links();
+        $data['links'] = $links;
+        $this->twig->display('filme/listarFilme', $data);
+    }
+
+
+    public function adicionarFavoritos($idFilme){
+        $favoritos = array(
+            'id_usuario' => $this->usuario['id_usuario'],
+            'id_filme' => $idFilme,
+        );
+
+        $this->Model_filme->adicionarAosFavoritos($favoritos);
+    }
 }

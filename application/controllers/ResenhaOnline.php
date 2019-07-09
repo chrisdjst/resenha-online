@@ -89,6 +89,7 @@ class ResenhaOnline extends CI_Controller {
                 'nome' => $this->input->post('nome'),
                 'email' => $this->input->post('email'),
                 'senha' => $senha,
+                'id_funcao' => 2,
             );
 
             $this->Model_usuario->cadastrar($usuario);

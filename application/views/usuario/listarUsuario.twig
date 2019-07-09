@@ -18,7 +18,7 @@
 {% block content %}
 	<div class="row">
 		<div class="container-fluid">
-		<table>
+		<table class="table table-dark">
 			<tr>
 				<td>
 					Nome:
@@ -39,7 +39,10 @@
 						{{ usuario.funcao|raw }}
 					</td>
 					<td>
-						<a href="alterarFuncao/{{ usuario.id_usuario|raw }}" class="btn btn-success">Mudar</a>
+						{#<form action="{{ base_url() }}/alterarFuncao">#}
+
+						{#</form>#}
+						<a href="{{ base_url() }}Usuario/alterarFuncao/{{ usuario.id_usuario|raw }}" class="btn btn-success">Mudar</a>
 					</td>
 				</tr>
 			{% endfor %}

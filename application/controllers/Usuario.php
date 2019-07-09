@@ -39,7 +39,7 @@ class Usuario extends CI_Controller {
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        $data["results"] = $this->Model_usuario->buscarFavoritos($config["per_page"], $page, $this->usuario['id_usuario']);
+        $data["results"] = $this->Model_usuario->buscarFavoritosPagination($config["per_page"], $page, $this->usuario['id_usuario']);
 
         $this->pagination->initialize($config);
 
@@ -100,8 +100,8 @@ class Usuario extends CI_Controller {
             );
 
             $this->Model_usuario->editarPerfil($usuario, $this->usuario['id_usuario']);
-            $this->session->set_flashdata("msg_cadastro_com_sucesso", "Cadastrado com Sucesso!");
-            $this->session->set_flashdata("classe_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
+            $this->session->set_flashdata("msg", "Cadastrado com Sucesso!");
+            $this->session->set_flashdata("class_msg", "alert alert-success alert-dismissible fade show");
             redirect("Usuario/perfil");
         }
     }
@@ -143,8 +143,8 @@ class Usuario extends CI_Controller {
             );
 
             $this->Model_usuario->trocarSenha($usuario, $this->usuario['id_usuario']);
-            $this->session->set_flashdata("msg_cadastro_com_sucesso", "Senha trocada com Sucesso!");
-            $this->session->set_flashdata("classe_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
+            $this->session->set_flashdata("msg", "Senha trocada com Sucesso!");
+            $this->session->set_flashdata("class_msg", "alert alert-success alert-dismissible fade show");
             redirect("Usuario/perfil");
         }
 
@@ -216,7 +216,17 @@ class Usuario extends CI_Controller {
 
 	public function alterarFuncao($idUsuario)
 	{
-        $data = $this->Usuario_formularios->formularioAlterarFuncao($idUsuario);
-        $this->twig->display('alterarFuncao', $data);
+		$data = $this->Usuario_formularios->formularioAlterarFuncao($idUsuario);
+		$this->twig->display('usuario/alterarFuncao', $data);
+	}
+
+
+	public function funcaoAlterada()
+	{
+		$novafuncao = $this->input->post('funcao');
+		$idUsuario = $this->input->post('idUsuario');
+
+		$this->Model_usuario->alterarFuncao($novafuncao, $idUsuario);
+		redirect('usuario/Perfil');
 	}
 }

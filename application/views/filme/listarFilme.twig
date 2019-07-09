@@ -28,8 +28,11 @@
                     <td>
                         Descrição:
                     </td>
+					<td>
+						Foto Capa:
+					</td>
                     <td>
-                        Alterar:
+                        Favoritos:
                     </td>
                 </tr>
                 {% for filmes in results %}
@@ -40,9 +43,21 @@
                         <td>
                             {{ filmes.descricao|raw }}
                         </td>
+						<td>
+							<img src="{{ filmes.caminho|raw }}" class="img-fluid" style="max-width: 10em;height: auto;"/>
+						</td>
                         <td>
-                            <a class="btn btn-success " href="{{ base_url() }}Filme/adicionarFavoritos/{{ filmes.id_filme|raw }}">Adicionar aos Favoritos</a>
-                        </td>
+							{% set fav = 0 %}
+							{% for favorito in favoritos %}
+								{% if favorito.id_filme == filmes.id_filme %}
+									{% set fav = 1 %}
+									<a class="btn btn-warning" href="{{ base_url() }}Filme/removerFavoritos/{{ filmes.id_filme|raw }}">Remover</a>
+                        		{% endif %}
+							{% endfor %}
+							{% if fav == 0 %}
+								<a class="btn btn-success" href="{{ base_url() }}Filme/adicionarFavoritos/{{ filmes.id_filme|raw }}">Adcionar</a>
+							{% endif %}
+						</td>
                     </tr>
                 {% endfor %}
             </table>

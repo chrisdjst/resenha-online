@@ -68,12 +68,18 @@ class Filme extends CI_Controller {
 		}
 		else
 		{
+			$file = $this->custom_upload->single_upload('file', array(
+				'upload_path' => 'static/images',
+				'allowed_types' => 'jpg|jpeg|bmp|png|gif',
+				'max_size' => '2048'// etc
+			));
 
 			$filme = array(
 				'nome' => $this->input->post('nome'),
 				'descricao' => $this->input->post('descricao'),
-				'caminho' => "".base_url()."/static/images/".$data['file_name'],
+				'caminho' => "".base_url()."static/images/".$file['file_name'],
 			);
+
 			$this->Model_filme->cadastrarFilme($filme);
 			$this->session->set_flashdata("msg_cadastro_com_sucesso", "Cadastrado com Sucesso!");
 			$this->session->set_flashdata("classe_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
@@ -84,6 +90,12 @@ class Filme extends CI_Controller {
 
 
 	public function listarFilmes(){
+
+		$this->load->model('usuario/Model_usuario');
+		$this->load->model('Model_usuario');
+
+		$data['favoritos'] = $this->Model_usuario->buscarFavoritos($this->usuario['id_usuario']);
+
         $totalFilmes = $this->Model_filme->getTotalFilmes();
 
         $this->load->library('pagination');
@@ -114,4 +126,13 @@ class Filme extends CI_Controller {
         $this->Model_filme->adicionarAosFavoritos($favoritos);
         redirect("Usuario/Perfil");
     }
+
+
+	public function removerFavoritos($idFilme){
+		$idUsuario = $this->usuario['id_usuario'];
+		$idFilme = $idFilme;
+
+		$this->Model_filme->removerDosFavoritos($idUsuario, $idFilme);
+		redirect("Usuario/Perfil");
+	}
 }

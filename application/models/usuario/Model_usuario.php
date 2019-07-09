@@ -124,7 +124,7 @@ class Model_usuario extends CI_Model{
 	}
 
 
-	public function buscarFavoritos($limit, $start, $idUsuario)
+	public function buscarFavoritosPagination($limit, $start, $idUsuario)
     {
         $this->db->limit($limit, $start);
         $this->db->where('id_usuario', $idUsuario);
@@ -174,6 +174,30 @@ class Model_usuario extends CI_Model{
         }
 
     }
+
+
+    public function buscarTodasFuncao()
+	{
+		$this->db->select('id_funcao, nome_funcao');
+		$funcao = $this->db->get('funcao')->result_array();
+		return $funcao;
+	}
+
+
+	public function alterarFuncao($novaFuncao, $idUsuario)
+	{
+		$this->db->set('id_funcao', $novaFuncao);
+		$this->db->where('id_usuario', $idUsuario);
+		$this->db->update('usuario');
+	}
+
+
+	public function buscarFavoritos($idUsuario)
+	{
+		$this->db->where('id_usuario', $idUsuario);
+		$idsFilmes = $this->db->select('id_filme')->get('favoritos')->result_array();
+		return $idsFilmes;
+	}
 
 }
 

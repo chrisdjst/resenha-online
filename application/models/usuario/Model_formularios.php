@@ -60,11 +60,65 @@ class Model_formularios extends CI_Model{
 		$form["form_open"] = form_open("Usuario/novaFuncao", 'method="POST"');
 		$form["label_funcao"] = form_label("Nome da Função:","funcao",'class=""', 'for="funcao"');
 		$form["input_funcao"] = form_input(array("name" => "funcao", "id" => "funcao", "class" => "form-control", "maxlength" => "255", "placeholder" => "Ex: Administrador"));
-		$form["button_submit"] = form_button(array("type" => "submit", "content" => "Entrar", "class" => "btn btn-primary"));
+		$form["button_submit"] = form_button(array("type" => "submit", "content" => "Criar", "class" => "btn btn-primary"));
 		$form["form_close"] = form_close();
 
 		return $form;
 	}
 
+
+	public function formularioAlterarFuncao($idUsuario)
+	{
+		$this->load->model('usuario/Model_usuario');
+		$this->load->model('Model_usuario');
+
+		$funcao = $this->Model_usuario->buscarTodasFuncao();
+
+		$options = $this->optionsFuncao($funcao);
+
+		$usuario = $this->buscarUsuario($idUsuario);
+
+		$form["form_open"] = form_open("Usuario/funcaoAlterada", 'method="POST"');
+		$form["label_nome"] = form_label("".$usuario['nome']."", '','');
+		$form["input_id_usuario"] = form_input(array("name" => "idUsuario", "value" => "".$usuario['id_usuario']."", 'type' => 'hidden'));
+		$form["label_funcao"] = form_label("Nova Função:","funcao",'class=""', 'for="funcao"');
+		$form["dropdown_funcao"] = form_dropdown('funcao', $options, $usuario['id_funcao'], array('class' => 'form-control'));
+		$form["button_submit"] = form_button(array("type" => "submit", "content" => "Mudar", "class" => "btn btn-primary"));
+		$form["form_close"] = form_close();
+
+		return $form;
+	}
+
+
+	public function buscarUsuario($idUsuario)
+	{
+		$this->db->where('id_usuario', $idUsuario);
+		return $this->db->get('usuario')->row_array();
+	}
+
+
+	public function optionsFuncao($funcoes)
+	{
+		if($funcoes)
+		{
+			$totalFuncao = count($funcoes);
+
+			$options = array( "".$funcoes[0]['id_funcao']."" => "".$funcoes[0]['nome_funcao']."");
+			if($totalFuncao == 1)
+			{
+
+				return $options;
+			}
+			else
+			{
+				for ($i=1; $i <= ($totalFuncao-1); $i++)
+				{
+					$options["".$funcoes[$i]['id_funcao'].""] = "".$funcoes[$i]['nome_funcao']."";
+				}
+
+				return $options;
+			}
+		}
+	}
 }
 

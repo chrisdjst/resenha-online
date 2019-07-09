@@ -15,7 +15,11 @@ class ResenhaOnline extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->model('filmes/Model_filme');
+		$this->load->model('Model_filme');
+
 	    $data = $this->Usuario_formularios->formularioLogin();
+	    $data['filmes'] = $this->Model_filme->filmesCapa();
         $this->twig->display('inicio', $data);
 	}
 
@@ -44,8 +48,8 @@ class ResenhaOnline extends CI_Controller {
         }
         ELSE {
 
-            $this->session->set_flashdata('msg_login', "Email ou Senha invalidos!");
-            $this->session->set_flashdata('class_msg_login', 'alert alert-danger alert-dismissible fade show');
+            $this->session->set_flashdata('msg', "Email ou Senha invalidos!");
+            $this->session->set_flashdata('class_msg', 'alert alert-danger alert-dismissible fade show');
             redirect("".base_url()."resenha-online");
         }
     }
@@ -93,8 +97,8 @@ class ResenhaOnline extends CI_Controller {
             );
 
             $this->Model_usuario->cadastrar($usuario);
-            $this->session->set_flashdata("msg_cadastro_com_sucesso", "Cadastrado com Sucesso!");
-            $this->session->set_flashdata("classe_cadastro_com_sucesso", "alert alert-success alert-dismissible fade show");
+            $this->session->set_flashdata("msg", "Cadastrado com Sucesso!");
+            $this->session->set_flashdata("class_msg", "alert alert-success alert-dismissible fade show");
             redirect("".base_url()."resenha-online/");
         }
 

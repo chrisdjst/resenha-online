@@ -19,16 +19,23 @@
 	<div class="row">
 		<div class="container-fluid">
 			{{ form_open|raw }}
+			<div class="form_group">
+				{{ label_nome|raw }}
+				{{ input_id_usuario|raw }}
+			</div>
 			<div class="form-group">
 				{{ label_funcao|raw }}
-				{{ input_funcao|raw }}
+				{{ dropdown_funcao|raw }}
 			</div>
 			{{ button_submit|raw }}
 			{{ form_close|raw }}
 		</div>
 	</div>
 
+
 {% endblock %}
 
 {% block right_content %}
+
+
 {% endblock %}

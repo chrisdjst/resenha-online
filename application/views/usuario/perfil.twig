@@ -17,10 +17,16 @@
 
 {% block content %}
     <div class="container-fluid">
-
+		<div class="row">
+			{% if msg %}
+				<div class="{{ class_msg|raw }}">
+					{{ msg|raw }}
+				</div>
+			{% endif %}
+		</div>
         <div class="row">
             <div class="col-md-4">
-                <label>{{ nome|raw }} Seja Bem Vindo</label>
+                <label>Seja Bem Vindo {{ nome|raw }}</label>
             </div>
             <div class="col-md-8">
                 <label>Sobre:</label>

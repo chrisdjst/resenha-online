@@ -26,9 +26,26 @@ class Model_filme extends CI_Model{
     }
 
 
-    public function adicionarAosFavoritos($favortios){
+    public function adicionarAosFavoritos($favortios)
+	{
 	    $this->db->insert('favoritos', $favortios);
     }
+
+
+    public function removerDosFavoritos($idUsuario, $idFilme)
+	{
+		$this->db->where('id_usuario', $idUsuario);
+		$this->db->where('id_filme', $idFilme);
+		$this->db->delete('favoritos');
+	}
+
+
+	public function filmesCapa()
+	{
+		$this->db->limit(4);
+		$this->db->order_by('id_filme', 'RANDOM');
+		return $this->db->select('caminho')->get('filme')->result_array();
+	}
 
 }
 

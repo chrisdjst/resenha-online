@@ -33,6 +33,29 @@
         <div class="row wy-text-center">
             <div class="col-md-12">
                 <label>Seus filmes favoritos:</label>
+                <table class="table table-dark">
+                    <tr>
+                        <td>
+                            Nome:
+                        </td>
+                        <td>
+                            Descrição:
+                        </td>
+                    </tr>
+                    {% for filmes in results %}
+                        <tr>
+                            <td>
+                                {{ filmes.nome|raw }}
+                            </td>
+                            <td>
+                                {{ filmes.descricao|raw }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="pagination">
+                    {{ links|raw }}
+                </div>
             </div>
         </div>
     </div>

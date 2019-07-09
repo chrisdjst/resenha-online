@@ -22,10 +22,22 @@
             <div class="form-group">
                 {{ label_nome|raw }}
                 {{ input_nome|raw }}
+
+                {% if (erros_validacao['erros_nome']) %}
+
+                    {{ erros_validacao['erros_nome']|raw }}
+
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ label_descricao|raw }}
                 {{ text_area_descricao|raw }}
+
+                {% if (erros_validacao['erros_descricao']) %}
+
+                    {{ erros_validacao['erros_descricao']|raw }}
+
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ label_upload|raw }}

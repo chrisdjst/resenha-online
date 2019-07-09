@@ -40,17 +40,17 @@ class Filme extends CI_Controller {
     public function cadastro()
 	{
 
-		$this->form_validation->set_rules('nome', 'Nome', array('required', 'min_length[2]', 'max_length[100]', 'regex_match[/^[ A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]+$/]'));
-		$this->form_validation->set_rules('descricao', 'Descrição', array('required', 'max_length[200]', 'regex_match[/^[ A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ,-.]+$/]'));
+		$this->form_validation->set_rules('nome', 'Nome', array('required', 'min_length[2]', 'max_length[100]', 'regex_match[/^[ A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ1234567890]+$/]'));
+		$this->form_validation->set_rules('descricao', 'Descrição', array('required', 'max_length[2000]', 'regex_match[/^[ A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ,-.]+$/]'));
 
 		if ($this->form_validation->run() == FALSE)
 		{
 			$form["form_open"] = form_open_multipart("Filme/cadastro", 'method="POST"');
 			$form["label_nome"] = form_label("Nome:","nome",'class=""', 'for="nome"');
-			$form["input_nome"] = form_input(array("name" => "nome", "id" => "nome", "class" => "form-control", "maxlength" => "100", "placeholder" => "Ex: Um Filme Legal"));
+			$form["input_nome"] = form_input(array("name" => "nome", "id" => "nome", "class" => "form-control", "maxlength" => "100", "placeholder" => "Ex: Um Filme Legal", "value" => set_value('nome')));
 			$form['label_descricao'] = form_label("Descrição","descricao",'class=""');
-			$form['text_area_descricao'] = form_textarea(array("name" => "descricao", "id" => "descricao", "class" => "form-control","maxlength" => "2000", "rows"=>"5"));
-			$form["input_upload"] = form_upload(array("name" => "file", "id" => "adicionar-foto", "accept" => "image/*", "hidden" => "true","onchange" => "previewFiles()"), '');
+			$form['text_area_descricao'] = form_textarea(array("name" => "descricao", "id" => "descricao", "class" => "form-control","maxlength" => "2000", "rows"=>"5", 'value' => set_value('descricao')));
+			$form["input_upload"] = form_upload(array("name" => "file", "id" => "adicionar-foto", "accept" => "image/*", "hidden" => "true","onchange" => "previewFiles()"));
 			$form["label_upload"] = form_label("Foto de capa", "adicionar-foto", array('class' => 'btn btn-success', 'id' => 'labelFoto', 'onchange' => 'previewFiles()'));
 			$form["button_submit"] = form_button(array("type" => "submit", "content" => "Cadastrar", "class" => "btn btn-primary"));
 			$form["form_close"] = form_close();
@@ -88,9 +88,9 @@ class Filme extends CI_Controller {
 
         $this->load->library('pagination');
 
-        $config['base_url'] = "".base_url()."usuario/listarUsuario";
+        $config['base_url'] = "".base_url()."filme/listarFilmes";
         $config['total_rows'] = $totalFilmes;
-        $config['per_page'] = 1;
+        $config['per_page'] = 2;
 
 
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -112,5 +112,6 @@ class Filme extends CI_Controller {
         );
 
         $this->Model_filme->adicionarAosFavoritos($favoritos);
+        redirect("Usuario/Perfil");
     }
 }

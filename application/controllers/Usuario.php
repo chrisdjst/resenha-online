@@ -28,6 +28,23 @@ class Usuario extends CI_Controller {
     public function perfil()
     {
         $data = $this->usuario;
+        $totalFavoritos = $this->Model_usuario->buscarFavoritosTotal($this->usuario['id_usuario']);
+
+        $this->load->library('pagination');
+
+        $config['base_url'] = "".base_url()."usuario/perfil";
+        $config['total_rows'] = $totalFavoritos;
+        $config['per_page'] = 2;
+
+
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        $data["results"] = $this->Model_usuario->buscarFavoritos($config["per_page"], $page, $this->usuario['id_usuario']);
+
+        $this->pagination->initialize($config);
+
+        $links = $this->pagination->create_links();
+        $data['links'] = $links;
         $this->twig->display('usuario/perfil', $data);
     }
 

@@ -101,7 +101,8 @@ class Model_usuario extends CI_Model{
         $this->db->where('id_funcao !=', 3);
 		$query = $this->db->get("usuario")->result_array();
 
-		if (count($query) > 0) {
+		if (count($query) > 0)
+		{
 			for( $i = 0; $i < count($query); $i++)
 			{
 				$query[$i]['funcao'] = $this->buscarNomeFuncao($query[$i]['id_funcao']);
@@ -121,6 +122,58 @@ class Model_usuario extends CI_Model{
 		$funcao = $this->db->get('funcao')->row_array();
 		return $funcao['nome_funcao'];
 	}
+
+
+	public function buscarFavoritos($limit, $start, $idUsuario)
+    {
+        $this->db->limit($limit, $start);
+        $this->db->where('id_usuario', $idUsuario);
+        $idsFilmes = $this->db->select('id_filme')->get('favoritos')->result_array();
+
+
+        if($idsFilmes)
+        {
+            $idsFilmes = $this->organizandoIds($idsFilmes);
+
+            $where_in = 'id_filme IN('.$idsFilmes.')';
+            $this->db->where($where_in);
+            return  $this->db->select('id_filme, nome, descricao, caminho')->get('filme')->result_array();
+        }
+        return FALSE;
+    }
+
+
+    public function buscarFavoritosTotal($idUsuario)
+    {
+        $this->db->where('id_usuario', $idUsuario);
+        return $this->db->count_all_results('favoritos');
+    }
+
+
+    public function organizandoIds($idsFavoritos)
+    {
+        if($idsFavoritos)
+        {
+            $totalFavoritos = count($idsFavoritos);
+
+            $favoritos = "".$idsFavoritos[0]['id_filme']."";
+            if($totalFavoritos == 1)
+            {
+
+                return $favoritos;
+            }
+            else
+            {
+                for ($i=1; $i <= ($totalFavoritos-1); $i++)
+                {
+                        $favoritos .= ", ".$idsFavoritos[$i]['id_filme']."";
+                }
+
+                return $favoritos;
+            }
+        }
+
+    }
 
 }
 

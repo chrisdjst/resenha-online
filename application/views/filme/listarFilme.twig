@@ -14,6 +14,8 @@
 
 {% block right_class %}col-md-2{% endblock %}
 
+{% block footer_class %}col-md-2{% endblock %}
+
 
 {% block content %}
     <div class="row">
@@ -39,7 +41,7 @@
                             {{ filmes.descricao|raw }}
                         </td>
                         <td>
-                            <a class="btn btn-sucess " href="{{ base_url() }}Filme/adicionarFavoritos/{{ filmes.id_filme|raw }}">Adicionar aos Favoritos</a>
+                            <a class="btn btn-success " href="{{ base_url() }}Filme/adicionarFavoritos/{{ filmes.id_filme|raw }}">Adicionar aos Favoritos</a>
                         </td>
                     </tr>
                 {% endfor %}
